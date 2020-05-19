@@ -14,18 +14,18 @@
             <thead class="thead-default">
                 <tr>
                     <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Console</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>God of War</td>
-                </tr>
-                <tr>
-                    <td>Pokemon Silver</td>
-                </tr>
-                <tr>
-                    <td>Super Mario RPG</td>
-                </tr>
+                {% for jogo in jogos %}
+                    <tr>
+                        <td>{{ jogo.nome }}</td>
+                        <td>{{ jogo.categoria }}</td>
+                        <td>{{ jogo.console }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
