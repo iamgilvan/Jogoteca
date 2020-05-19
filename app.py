@@ -10,10 +10,27 @@ class Jogo:
         self.categoria = categoria
         self.console = console
 
+
+class Usuario:
+    def __init__(self, id, nome, senha):
+        self.id = id
+        self.nome = nome
+        self.senha = senha
+
+
+usuario1 = Usuario('luan', 'Luan Marques', '1234')
+usuario2 = Usuario('nico', 'Nico Steppat', '7a1')
+usuario3 = Usuario('flavio', 'Flávio', 'javascript')
+
+usuarios = { usuario1.id: usuario1,
+             usuario2.id: usuario2,
+             usuario3.id: usuario3 }
+
 jogo1 = Jogo('Super Mario', 'Acao', 'SNES')
 jogo2 = Jogo('Pokemon Gold', 'RPG', 'GBA')
 jogo3 = Jogo('Mortal Kombat', 'Luta', 'SNES')
 lista = [jogo1, jogo2, jogo3]
+
 
 @app.route('/')
 def index():
@@ -45,12 +62,13 @@ def login():
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
-    if 'mestra' == request.form['senha']:
-        session['usuario_logado'] = request.form['usuario']
-        # exibinto mensagens
-        flash(request.form['usuario'] + ' logou com sucesso!')
-        proxima_pagina = request.form['proxima']
-        return redirect(proxima_pagina)
+    if request.form['usuario'] in usuarios:
+        usuario = usuarios[request.form['usuario']]
+        if usuario.senha == request.form['senha']:
+            session['usuario_logado'] = usuario.id
+            flash(usuario.nome + ' logou com sucesso!')
+            proxima_pagina = request.form['proxima']
+            return redirect(proxima_pagina)
     else:
         flash('Não logado, tente de novo!')
         return redirect(url_for('login'))
